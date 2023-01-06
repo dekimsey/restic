@@ -16,6 +16,8 @@ import (
 	"golang.org/x/sys/windows"
 )
 
+const VSSSupported = true
+
 // HRESULT is a custom type for the windows api HRESULT type.
 type HRESULT uint
 
@@ -725,6 +727,11 @@ func HasSufficientPrivilegesForVSS() error {
 	}
 
 	return err
+}
+
+// VolumeName returns the name of the volume given a corresponding path
+func VolumeName(path string) string {
+	return filepath.VolumeName(fixPath)
 }
 
 // NewVssSnapshot creates a new vss snapshot. If creating the snapshots doesn't

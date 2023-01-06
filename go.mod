@@ -7,6 +7,7 @@ require (
 	github.com/anacrolix/fuse v0.2.0
 	github.com/cenkalti/backoff/v4 v4.2.0
 	github.com/cespare/xxhash/v2 v2.2.0
+	github.com/davecgh/go-spew v1.1.1
 	github.com/elithrar/simple-scrypt v1.3.0
 	github.com/go-ole/go-ole v1.2.6
 	github.com/google/go-cmp v0.5.9
@@ -55,6 +56,7 @@ require (
 	github.com/klauspost/cpuid/v2 v2.2.2 // indirect
 	github.com/kr/fs v0.1.0 // indirect
 	github.com/minio/md5-simd v1.1.2 // indirect
+	github.com/mistifyio/go-zfs/v3 v3.0.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/rs/xid v1.4.0 // indirect

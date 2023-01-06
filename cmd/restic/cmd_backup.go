@@ -9,7 +9,6 @@ import (
 	"os"
 	"path"
 	"path/filepath"
-	"runtime"
 	"strconv"
 	"strings"
 	"sync"
@@ -140,8 +139,8 @@ func init() {
 	f.BoolVar(&backupOptions.IgnoreCtime, "ignore-ctime", false, "ignore ctime changes when checking for modified files")
 	f.BoolVarP(&backupOptions.DryRun, "dry-run", "n", false, "do not upload or write any data, just show what would be done")
 	f.BoolVar(&backupOptions.NoScan, "no-scan", false, "do not run scanner to estimate size of backup")
-	if runtime.GOOS == "windows" {
-		f.BoolVar(&backupOptions.UseFsSnapshot, "use-fs-snapshot", false, "use filesystem snapshot where possible (currently only Windows VSS)")
+	if fs.VSSSupported {
+		f.BoolVar(&backupOptions.UseFsSnapshot, "use-fs-snapshot", false, "use filesystem snapshot where possible")
 	}
 
 	// parse read concurrency from env, on error the default value will be used
@@ -555,7 +554,7 @@ func runBackup(ctx context.Context, opts BackupOptions, gopts GlobalOptions, ter
 	}
 
 	var targetFS fs.FS = fs.Local{}
-	if runtime.GOOS == "windows" && opts.UseFsSnapshot {
+	if fs.VSSSupported && opts.UseFsSnapshot {
 		if err = fs.HasSufficientPrivilegesForVSS(); err != nil {
 			return err
 		}

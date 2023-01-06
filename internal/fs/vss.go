@@ -1,11 +1,14 @@
-//go:build !windows
-// +build !windows
+//go:build !windows && !(freebsd || netbsd)
+// +build !windows,!freebsd,!netbsd
 
 package fs
 
 import (
+	"filepath"
 	"github.com/restic/restic/internal/errors"
 )
+
+const VSSSupported = false
 
 // MountPoint is a dummy for non-windows platforms to let client code compile.
 type MountPoint struct {
@@ -29,6 +32,11 @@ type VssSnapshot struct {
 // HasSufficientPrivilegesForVSS returns true if the user is allowed to use VSS.
 func HasSufficientPrivilegesForVSS() error {
 	return errors.New("VSS snapshots are only supported on windows")
+}
+
+// VolumeName returns the name of the volume given a corresponding path
+func VolumeName(path string) string {
+	return filepath.VolumeName(fixPath)
 }
 
 // NewVssSnapshot creates a new vss snapshot. If creating the snapshots doesn't
